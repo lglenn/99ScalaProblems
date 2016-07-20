@@ -11,17 +11,8 @@ package io.lglenn.nnproblems
 
 object P20 {
 
-    def removeAt[T](i: Int, l: List[T]): List[T] = {
-        l.take(i) ::: l.drop(i + 1)
-    }
-
-    def removeAtRec[T](i: Int, l: List[T]): List[T] = {
-        if (l == Nil)
-            Nil
-        else if (i == 0)
-            l.tail
-        else
-            l.head :: removeAtRec(i-1,l.tail)
+    def removeAt[T](i: Int, l: List[T]): (List[T],T) = {
+        (l.take(i) ::: l.drop(i + 1),l(i))
     }
 
 }
