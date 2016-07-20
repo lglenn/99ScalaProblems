@@ -10,7 +10,11 @@ package io.lglenn.nnproblems
 object P21 {
 
     def insertAt[T](obj: T, i: Int, l: List[T]): List[T] = {
-        l.take(i) ::: (obj :: l.drop(i + 1))
+        l.take(i) ::: (obj :: l.drop(i))
+    }
+
+    def insertAtSplit[T](obj: T, i: Int, l: List[T]) = l.splitAt(i) match {
+        case (pre,post) => pre ::: (obj :: post)
     }
 
 }
