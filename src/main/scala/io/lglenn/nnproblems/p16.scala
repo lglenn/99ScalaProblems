@@ -11,12 +11,12 @@ import scala.annotation.tailrec
 
 object P16 {
 
-  def dropNth[T](n: Int, l: List[T]): List[T] = l match {
+  def drop[T](n: Int, l: List[T]): List[T] = l match {
       case Nil => Nil
-      case _ => l.take(n - 1) ::: dropNth(n,l.drop(n))
+      case _ => l.take(n - 1) ::: drop(n,l.drop(n))
   }
 
-  def dropNthTail[T](n: Int, l: List[T]): List[T] = {
+  def dropTail[T](n: Int, l: List[T]): List[T] = {
       @tailrec def myDrop(o: Int, l: List[T], acc: List[T]): List[T] = l match {
           case Nil => acc
           case x :: xs => if (o == 1) myDrop(n,xs,acc) else myDrop(o-1,xs,x :: acc)

@@ -4,13 +4,17 @@ package io.lglenn.nnproblems
 
 object P09 {
 
-    def pack[T](l: List[T]): List[List[T]] = {
+    def packHO[T](l: List[T])(comparator: (T,T) => Boolean): List[List[T]] = {
         l.foldRight(List[List[T]]()) {
             (elem,acc) => acc match {
                 case Nil => List(elem) :: acc
-                case x :: xs => if (elem == x.head) (elem :: x) :: xs else List(elem) :: acc
+                case x :: xs => if (comparator(elem,x.head)) (elem :: x) :: xs else List(elem) :: acc
             }
         }
+    }
+
+    def pack[T](l: List[T]): List[List[T]] = {
+        packHO(l) { (a,b) => a == b }
     }
 
     def packRec[T](l: List[T]): List[List[T]] = l match { 

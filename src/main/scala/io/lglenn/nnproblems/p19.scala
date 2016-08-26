@@ -12,13 +12,14 @@ package io.lglenn.nnproblems
 
 object P19 {
 
-    def rotate[T](n: Int, l: List[T]): List[T] = {
-        if (n > 0)
-            l.drop(n) ::: l.take(n)
-        else
-            l.drop(l.size + n) ::: l.take(l.size + n)
+  def rotate[T](n: Int, l: List[T]): List[T] = l match {
+    case Nil => Nil
+    case _ => {
+      val places = (n + l.size) % l.size
+      l.drop(places) ::: l.take(places)
     }
-    
+  }
+
 }
 
-// vim: set ts=4 sw=4 et:
+// vim: set ts=2 sw=2 et:

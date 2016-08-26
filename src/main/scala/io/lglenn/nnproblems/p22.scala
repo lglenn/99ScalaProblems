@@ -1,5 +1,7 @@
 package io.lglenn.nnproblems
 
+import scala.annotation.tailrec
+
 /*
 * P22 (*) Create a list containing all integers within a given range.
 * Example:
@@ -9,23 +11,22 @@ package io.lglenn.nnproblems
 
 object P22 {
 
-    def range(start: Int, finish: Int): List[Int] = {
-        List.iterate(start,finish - start + 1) { _ + 1 }
-    }
+  def range(start: Int, finish: Int): List[Int] = 
+    List.iterate(start,finish - start + 1) { _ + 1 }
 
-    def rangeBuiltin(start: Int, finish: Int): List[Int] = {
-        List.range(start,finish + 1)
-    }
+  def rangeBuiltin(start: Int, finish: Int): List[Int] =
+    List.range(start,finish + 1)
 
-    def rangeRec(start: Int, finish: Int): List[Int] = {
-        if (start == finish) {
-            Nil
-        } else if (start == finish - 1) {
-            List(finish)
-        } else {
-            start :: rangeRec(start + 1,finish)
-        }
+  def rangeRec(start: Int, finish: Int): List[Int] =
+    if (start > finish) Nil else start :: rangeRec(start + 1,finish);
+
+  def rangeTail(start: Int, finish: Int): List[Int] = {
+    @tailrec def myRange(start: Int, acc: List[Int]): List[Int] = {
+      if(start > finish) acc else myRange(start + 1, start :: acc);
     }
+    myRange(start,Nil).reverse
+  }
+
 
 }
-// vim: set ts=4 sw=4 et:
+// vim: set ts=2 sw=2 et:

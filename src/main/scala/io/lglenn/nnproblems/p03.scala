@@ -4,7 +4,7 @@ package io.lglenn.nnproblems
 
 object P03 {
 
-    def kth[T](l: List[T],k: Int): T = k match {
+    def kth[A](l: List[A],k: Int): A = k match {
         case 1 => l.head
         case _ => kth(l.tail,k-1)
     }

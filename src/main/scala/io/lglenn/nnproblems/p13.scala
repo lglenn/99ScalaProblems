@@ -14,26 +14,26 @@ import scala.annotation.tailrec
 
 object P13 {
 
-    def rle[T](l: List[T]): List[(Int,T)] = l match {
+    def encodeDirect[T](l: List[T]): List[(Int,T)] = l match {
         case Nil => List[(Int,T)]()
         case x :: _ => {
             val (packed,next) = l.span(_ == x)
-            (packed.size, x) :: rle(next)
+            (packed.size, x) :: encodeDirect(next)
         }
     }
 
-    def rleTail[T](l: List[T]): List[(Int,T)] = {
-        @tailrec def myRle(l: List[T], acc: List[(Int,T)]): List[(Int,T)] = l match {
+    def encodeDirectTail[T](l: List[T]): List[(Int,T)] = {
+        @tailrec def myEncodeDirectTail(l: List[T], acc: List[(Int,T)]): List[(Int,T)] = l match {
             case Nil => acc
             case x :: _ => {
                 val (packed,next) = l.span(_ == x)
-                    myRle(next,(packed.size, x) :: acc)
+                    myEncodeDirectTail(next,(packed.size, x) :: acc)
             }
         }
-        myRle(l,Nil).reverse
+        myEncodeDirectTail(l,Nil).reverse
     }
 
-    def rleFunc[T](l: List[T]): List[(Int,T)] = {
+    def encodeDirectFunc[T](l: List[T]): List[(Int,T)] = {
         l.foldRight(List[(Int,T)]()) {
             (e,acc) =>
             if (acc.isEmpty || e != acc.head._2)

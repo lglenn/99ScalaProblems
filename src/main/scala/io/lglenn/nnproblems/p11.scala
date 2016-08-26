@@ -7,10 +7,10 @@ package io.lglenn.nnproblems
 
 object P11 {
 
-  import io.lglenn.nnproblems.P10.rle
+  import io.lglenn.nnproblems.P10.encode
 
-  def mrle[T](l: List[T]): List[Any] = rle(l) map {
-      case (x,1) => x
+  def encodeModified[T](l: List[T]): List[Any] = encode(l) map {
+      case (1,x) => x
       case y => y
   }
     

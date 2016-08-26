@@ -6,7 +6,7 @@ object P10 {
 
     import io.lglenn.nnproblems.P09.pack
 
-    def rle[T](l: List[T]): List[(T,Int)] =  pack(l) map { e => (e.head,e.size) }
+    def encode[T](l: List[T]): List[(Int,T)] =  pack(l) map { e => (e.size,e.head) }
 
 }
 

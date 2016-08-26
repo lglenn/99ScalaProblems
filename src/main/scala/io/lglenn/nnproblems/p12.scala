@@ -5,7 +5,7 @@ package io.lglenn.nnproblems
 
 object P12 {
 
-    def decode[T](l: List[(T,Int)]): List[T] = l flatMap { e => List.fill(e._2)(e._1) }
+    def decode[A](l: List[(Int,A)]): List[A] = l flatMap { e => List.fill(e._1)(e._2) }
 
 }
 
