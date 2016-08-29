@@ -27,10 +27,14 @@ class P36Spec extends NNPSpec {
     it("calculates the prime factors of an integer, and their multiplicity") {
       assert(315.primeFactorMultiplicity == List((3,2),(5,1),(7,1)))
     }
+    it("works with 2") {
+      assert(2.primeFactorMultiplicity == List((2,1)))
+    }
+    it("works with 1") {
+      assert(1.primeFactorMultiplicity == Nil)
+    }
   }
 
-
 }
-
 
 // vim: set ts=2 sw=2 et:

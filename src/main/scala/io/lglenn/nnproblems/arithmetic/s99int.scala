@@ -4,6 +4,8 @@ import scala.Stream
 import scala.math.sqrt
 import S99Int._
 import io.lglenn.nnproblems.P10
+import concurrent.Future
+import concurrent.ExecutionContext.Implicits.global
 
 class S99Int(val start: Int) {
 
@@ -25,7 +27,7 @@ class S99Int(val start: Int) {
         p :: myPFM(n / p)
       }
     }
-    P10.encode(myPFM(start)) map ((e) => (e._2,e._1))
+    P10.encode(myPFM(start)) map { case (a,b) => (b,a) }
   }
 
 }
@@ -35,6 +37,10 @@ object S99Int {
   implicit def int2S99Int(i: Int): S99Int = new S99Int(i);
 
   val primes = Stream.cons(2,Stream.from(3,2) filter { _.isPrime });
+
+  def prime(n: Int): Future[Int] = Future {
+    primes drop (n-1) head
+  }
 
   def gcd(a: Int, b: Int): Int = if(b == 0) a else gcd(b,a % b); 
 

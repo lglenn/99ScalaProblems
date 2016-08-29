@@ -9,12 +9,12 @@ object FM {
   def basic(n: Int,p: Int): List[(Int,Int)] = {
     val pairs = List.range(1,n) map { j => List.range(1,j) map { i => (i,j) } }
     val flattened = pairs.foldRight(List[(Int,Int)]()) { (c,a) => c ::: a }
-    flattened.filter { (pair) => (pair._1 + pair._2) % p == 0 }
+    flattened.filter { case (a,b) => (a + b) % p == 0 }
   }
 
   def fm(n: Int, p: Int): List[(Int,Int)] = {
     val pairs = List.range(1,n) flatMap { j => List.range(1,j) map { i => (i,j) } }
-    pairs.filter { pair => (pair._1  + pair._2) % p == 0 }
+    pairs.filter { case (a,b) => (a + b) % p == 0 }
   }
 
   def comp(n: Int, p: Int): List[(Int,Int)] = {

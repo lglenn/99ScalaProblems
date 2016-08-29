@@ -50,6 +50,14 @@ class P13Spec extends NNPSpec {
     it should behave like aDirectEncoder(P13.encodeDirectFunc[A])
   }
 
+  describe("encodeDirectCompact") {
+    val raw = List('a,'a,'d,'c,'c,'d);
+    val expected = List((2,'a),'d,(2,'c),'d);
+    it("compacts elements with one occurrence") {
+      assert(P13.encodeDirectCompact(raw) == expected)
+    }
+  }
+
 }
 
 // vim: set ts=2 sw=2 et:
