@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 object P01 {
 
-    def lastDirect[A](l: List[A]): A = l.reverse head
+    def lastDirect[A](l: List[A]): A = l.last
 
     @tailrec
     def lastRecursive[A](l: List[A]): A = l match {
