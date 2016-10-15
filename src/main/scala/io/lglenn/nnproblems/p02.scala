@@ -11,6 +11,8 @@ object P02 {
       case Nil => throw new Exception
   }
 
+  def penultimateDirect[A](l: List[A]): A = l.init.last
+
 }
 
 // vim: set ts=4 sw=4 et:

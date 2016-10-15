@@ -34,6 +34,10 @@ class P02Spec extends NNPSpec {
       it should behave like aPenultimateFunc(P02.penultimate)
     }
 
+    describe("penultimateDirect") {
+      it should behave like aPenultimateFunc(P02.penultimateDirect)
+    }
+
   }
 
 }
