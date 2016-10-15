@@ -17,6 +17,9 @@ class S99Int(val start: Int) {
 
   def totient: Int = (1 to start).filter( _.isCoprimeTo(start)).takeWhile(_ <= start).length
 
+  def totientImproved: Int =
+    start.primeFactorMultiplicity map { case (p,m) => (p - 1) * scala.math.pow(p,m - 1).toInt } reduce { _ * _ }
+
   def primeFactors: List[Int] = (2 to start / 2) filter (start % _ == 0) filter (_.isPrime) toList
 
   def primeFactorMultiplicity: List[(Int,Int)] = {
