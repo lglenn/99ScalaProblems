@@ -23,6 +23,11 @@ class S99Int(val start: Int) {
 
   def primeFactors: List[Int] = (2 to start / 2) filter (start % _ == 0) filter (_.isPrime) toList
 
+  def goldbach: (Int,Int) = primes takeWhile (_ < start) find (a => (start - a).isPrime) match {
+    case Some(a) => (a,start - a)
+    case None => throw new IllegalArgumentException
+  }
+
   def primeFactorMultiplicity: List[(Int,Int)] = {
     def myPFM(n: Int): List[Int] = {
       if (n == 1) Nil
