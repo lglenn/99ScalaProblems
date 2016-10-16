@@ -6,6 +6,7 @@ import S99Int._
 import io.lglenn.nnproblems.P10
 import concurrent.Future
 import concurrent.ExecutionContext.Implicits.global
+import scala.math.pow
 
 class S99Int(val start: Int) {
 
@@ -18,7 +19,7 @@ class S99Int(val start: Int) {
   def totient: Int = (1 to start).filter( _.isCoprimeTo(start)).takeWhile(_ <= start).length
 
   def totientImproved: Int =
-    start.primeFactorMultiplicity map { case (p,m) => (p - 1) * scala.math.pow(p,m - 1).toInt } reduce { _ * _ }
+    start.primeFactorMultiplicity map { case (p,m) => (p - 1) * pow(p,m - 1) } reduce { _ * _ } toInt
 
   def primeFactors: List[Int] = (2 to start / 2) filter (start % _ == 0) filter (_.isPrime) toList
 
@@ -36,6 +37,8 @@ class S99Int(val start: Int) {
 }
 
 object S99Int {
+
+  def listPrimesinRange(r: Range): List[Int] = primes dropWhile (_ < r.head) takeWhile (_ <= r.last) toList
 
   implicit def int2S99Int(i: Int): S99Int = new S99Int(i);
 
