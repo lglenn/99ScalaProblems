@@ -12,6 +12,8 @@ class S99Int(val start: Int) {
 
   override def toString = start.toString
 
+  def isEven: Boolean = start % 2 == 0
+
   def isPrime: Boolean = (start > 1 ) && (primes.takeWhile { _ <= sqrt(start) } forall { start % _ != 0 });
 
   def isCoprimeTo(other: Int): Boolean = gcd(start,other) == 1
@@ -23,9 +25,9 @@ class S99Int(val start: Int) {
 
   def primeFactors: List[Int] = (2 to start / 2) filter (start % _ == 0) filter (_.isPrime) toList
 
-  def goldbach: (Int,Int) = primes takeWhile (_ < start) find (a => (start - a).isPrime) match {
+  def goldbach: (Int,Int) = primes takeWhile (_ < start) find { a => (start - a).isPrime } match {
     case Some(a) => (a,start - a)
-    case None => throw new IllegalArgumentException
+    case None => throw new IllegalArgumentException(s"$start is not valid for goldbach")
   }
 
   def primeFactorMultiplicity: List[(Int,Int)] = {
@@ -44,6 +46,10 @@ class S99Int(val start: Int) {
 object S99Int {
 
   def listPrimesinRange(r: Range): List[Int] = primes dropWhile (_ < r.head) takeWhile (_ <= r.last) toList
+
+  def getGoldbachList(r: Range): List[String] = goldbachListLimited(r,0)
+  
+  def goldbachListLimited(r: Range, threshold: Int): List[String] = r filter (a => a.isEven && a > 2) map (_.goldbach) filter { case (a,b) => a > threshold && b > threshold } map { case (a,b) => s"${a + b} = $a + $b" } toList;
 
   implicit def int2S99Int(i: Int): S99Int = new S99Int(i);
 
