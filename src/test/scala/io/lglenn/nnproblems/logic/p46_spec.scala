@@ -52,6 +52,15 @@ class P46Spec extends NNPSpec {
     }
   }
 
+  describe("not") {
+    it("is false for true") {
+      assert(!S99Logic.not(true))
+    }
+    it("is true for false") {
+      assert(S99Logic.not(false))
+    }
+  }
+
   describe("or") {
     it("is true for true true") {
       assert(or(true,true))
