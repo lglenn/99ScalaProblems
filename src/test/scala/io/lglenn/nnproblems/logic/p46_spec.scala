@@ -6,7 +6,7 @@ import io.lglenn.nnproblems.logic.S99Logic._
 
 import org.scalatest._
 
-class P42Spec extends NNPSpec {
+class P46Spec extends NNPSpec {
 
   markup { """
 
