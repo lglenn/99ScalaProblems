@@ -144,21 +144,30 @@ class P42Spec extends NNPSpec {
 
   describe("table2") {
     val f: (Boolean, Boolean) => Boolean = (a,b) => and(a, or(a,b));
-    val table = table2(f)
+    val table = table2(f);
+    val expected = List(
+      "A      B      result",
+      "true   true   true",
+      "true   false  true",
+      "false  true   false",
+      "false  false  false");
+
+    val cmprow = (row: Int) => table(row - 1) == expected(row - 1)
+
     it("has a proper header") {
-      assert(table.head == "A      B      result")
+      assert(cmprow(1))
     }
     it("has the right value for inputs true, true") {
-      assert(table.drop(1).head == "true   true   true")
+      assert(cmprow(2))
     }
     it("has the right value for inputs true, false") {
-      assert(table.drop(2).head == "true   false  true")
+      assert(cmprow(3))
     }
     it("has the right value for inputs false, true") {
-      assert(table.drop(3).head == "false  true   false")
+      assert(cmprow(4))
     }
     it("has the right value for inputs false, false") {
-      assert(table.drop(4).head == "false  false  false")
+      assert(cmprow(5))
     }
   }
 
