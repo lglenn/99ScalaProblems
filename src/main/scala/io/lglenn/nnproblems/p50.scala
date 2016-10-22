@@ -28,7 +28,7 @@ object P50 {
 
   def huffmanTree(ls: List[(String,Int)]): Tree = {
     val q = new mutable.PriorityQueue[Tree]()(Ordering.by[Tree, Int]( -_.weight ));
-    ls foreach ((e) => e match { case (sym,weight) => q.enqueue(new Leaf(weight,sym)) })
+    ls foreach ((e) => e match { case (sym,weight) => q.enqueue(Leaf(weight,sym)) })
     @tailrec def makeTree: Unit = {
       if(q.size > 1) {
         val a = q.dequeue
