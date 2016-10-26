@@ -1,5 +1,7 @@
 package io.lglenn.nnproblems.binarytree
 
+import scala.annotation.tailrec
+
 sealed abstract class Tree[+T] {
   def isMirrorOf[A](other: Tree[A]): Boolean
   def isSymmetric: Boolean
@@ -69,6 +71,15 @@ object Tree {
       } yield Node(value,subtrees._1,subtrees._2)
     }
   } 
+
+  def fromList[T <% Ordered[T]](ls: List[T]): Tree[T] = {
+    @tailrec
+    def myFromList(ls: List[T],acc: Tree[T]): Tree[T] = ls match {
+      case Nil => acc
+      case x :: xs => myFromList(xs,acc.addValue(x))
+    }
+    myFromList(ls,End)
+  }
 
 }
 

@@ -61,6 +61,15 @@ class P57Spec extends NNPSpec {
     }
   }
 
+  describe("Tree.fromList") {
+    it("builds a tree from a list") {
+      assert(Tree.fromList(List(3, 2, 5, 7, 1)).toString == "T(3 T(2 T(1 . .) .) T(5 . T(7 . .)))")
+    }
+    it("handles the empty list") {
+      assert(Tree.fromList(Nil) == End)
+    }
+  }
+
 }
 
 // vim: set ts=2 sw=2 et:
