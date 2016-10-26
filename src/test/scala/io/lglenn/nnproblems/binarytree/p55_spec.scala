@@ -26,28 +26,34 @@ class P55Spec extends NNPSpec {
   """ }
 
   describe("Tree.cbalancd") {
+
+    val x = "x";
+    val leftLeg = Node(x,Node(x),End);
+    val rightLeg = Node(x,End,Node(x));
+    val leaf = Node(x)
+
     describe("when there are 0 nodes") {
       it("returns a list containing only the empty tree") {
-        assert(Tree.cbalanced(0,"x") == List(End))
+        assert(Tree.cbalanced(0,x) == List(End))
       }
     }
     describe("when there is 1 node") {
       it("returns a list containing a single node with no children") {
-        assert(Tree.cbalanced(1,"x") == List(Node("x")))
+        assert(Tree.cbalanced(1,x) == List(leaf))
       }
     }
     describe("when there are 2 nodes") {
       it("returns a list containing the two possible trees") {
-        val result = Tree.cbalanced(2,"x");
-        result should contain only (Node("x",End,Node("x")), Node("x",Node("x"),End))
+        val result = Tree.cbalanced(2,x);
+        result should contain only (leftLeg,rightLeg)
       }
     }
-    describe("when there is some larger number of nodes") {
-      val result = Tree.cbalanced(4,"x");
-      val a = Node("x",Node("x",Node("x"),End),Node("x"))
-      val b = Node("x",Node("x",End,Node("x")),Node("x"))
-      val c = Node("x",Node("x"),Node("x",Node("x"),End))
-      val d = Node("x",Node("x"),Node("x",End,Node("x")))
+    describe("when there is some larger even number of nodes") {
+      val result = Tree.cbalanced(4,x);
+      val a = Node(x,leftLeg,leaf)
+      val b = Node(x,rightLeg,leaf)
+      val c = Node(x,leaf,leftLeg)
+      val d = Node(x,leaf,rightleg)
       result should contain only (a,b,c,d)
     }
   }
