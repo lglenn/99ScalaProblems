@@ -1,13 +1,26 @@
 package io.lglenn.nnproblems.binarytree
 
-sealed abstract class Tree[+T];
+sealed abstract class Tree[+T] {
+  def isMirrorOf[A](other: Tree[A]): Boolean
+  def isSymmetric: Boolean
+}
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
   override def toString = "T(" + value.toString + " " + left.toString + " " + right.toString + ")"
+  def isMirrorOf[A](other: Tree[A]): Boolean = other match {
+    case End => false
+    case Node(_,l,r) => left.isMirrorOf(r) && right.isMirrorOf(l)
+  }
+  def isSymmetric: Boolean = left.isMirrorOf(right)
 }
 
 case object End extends Tree[Nothing] {
   override def toString = "."
+  def isMirrorOf[A](other: Tree[A]): Boolean = other match {
+    case End => true
+    case _ => false
+  }
+  def isSymmetric: Boolean = true
 }
 
 object Node {
@@ -37,7 +50,7 @@ object Tree {
         subtrees <- List((a,b),(b,a))
       } yield Node(value,subtrees._1,subtrees._2)
     }
-  }
+  } 
 
 }
 
