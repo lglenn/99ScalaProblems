@@ -53,7 +53,7 @@ class P55Spec extends NNPSpec {
       val a = Node(x,leftLeg,leaf)
       val b = Node(x,rightLeg,leaf)
       val c = Node(x,leaf,leftLeg)
-      val d = Node(x,leaf,rightleg)
+      val d = Node(x,leaf,rightLeg)
       result should contain only (a,b,c,d)
     }
     describe("when there is some larger odd number of nodes") {
