@@ -31,7 +31,11 @@ object Tree {
       // one subtree will be one node larger than the other
       val smallTree = cbalanced((nodes / 2) - 1, value);
       val bigTree = cbalanced(nodes / 2, value);
-      bigTree flatMap { a => smallTree flatMap { b => List(Node(value,a,b), Node(value,b,a)) } }
+      for {
+        a <- bigTree
+        b <- smallTree
+        subtrees <- List((a,b),(b,a))
+      } yield Node(value,subtrees._1,subtrees._2)
     }
   }
 
