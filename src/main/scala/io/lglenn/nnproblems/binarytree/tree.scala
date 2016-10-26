@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 sealed abstract class Tree[+T] {
   def isMirrorOf[A](other: Tree[A]): Boolean
   def isSymmetric: Boolean
-  def addValue[U >: T <% Ordered[U]](v: U): Tree[U] 
+  def addValue[U >: T](v: U)(implicit ev: U => Ordered[U]): Tree[U] 
 }
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
@@ -19,7 +19,7 @@ case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
 
   def isSymmetric: Boolean = left.isMirrorOf(right);
 
-  def addValue[U >: T <% Ordered[U]](v: U): Tree[U] = {
+  def addValue[U >: T](v: U)(implicit ev: U => Ordered[U]): Tree[U] = {
     if(v < value) {
       Node(value,left.addValue(v),right)
     } else {
@@ -40,7 +40,7 @@ case object End extends Tree[Nothing] {
 
   def isSymmetric: Boolean = true
 
-  def addValue[U <% Ordered[U]](v: U): Tree[U] = Node(v)
+  def addValue[U](v: U)(implicit ev: U => Ordered[U]): Tree[U] = Node(v)
 }
 
 object Node {
@@ -72,7 +72,7 @@ object Tree {
     }
   } 
 
-  def fromList[T <% Ordered[T]](ls: List[T]): Tree[T] = {
+  def fromList[T](ls: List[T])(implicit ev: T => Ordered[T]): Tree[T] = {
     @tailrec
     def myFromList(ls: List[T],acc: Tree[T]): Tree[T] = ls match {
       case Nil => acc
