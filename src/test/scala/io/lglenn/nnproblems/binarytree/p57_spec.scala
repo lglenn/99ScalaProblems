@@ -70,6 +70,15 @@ class P57Spec extends NNPSpec {
     }
   }
 
+  describe("problem 57.3") {
+    it("uses fromList to test p56 with a symmetric list") {
+      assert(Tree.fromList(List(5, 3, 18, 1, 4, 12, 21)).isSymmetric)
+    }
+    it("uses fromList to test p56 with an asymmetric list") {
+      assert(!Tree.fromList(List(3, 2, 5, 7, 4)).isSymmetric)
+    }
+  }
+
 }
 
 // vim: set ts=2 sw=2 et:
