@@ -14,4 +14,27 @@ object Node {
   def apply[T](value: T): Node[T] = Node(value, End, End);
 }
 
+object Tree {
+
+  // P55
+  def cbalanced[T](nodes: Int, value: T): List[Tree[T]] = nodes match {
+    case 0 => List(End)
+    case n if n % 2 == 1 => {
+      // left and right subtrees contain the same number of nodes
+      val trees = cbalanced(nodes / 2,value);
+      for {
+        a <- trees
+        b <- trees
+      } yield Node(value,a,b)
+    }
+    case _ => {
+      // one subtree will be one node larger than the other
+      val smallTree = cbalanced((nodes / 2) - 1, value);
+      val bigTree = cbalanced(nodes / 2, value);
+      bigTree flatMap { a => smallTree flatMap { b => List(Node(value,a,b), Node(value,b,a)) } }
+    }
+  }
+
+}
+
 // vim: set ts=2 sw=2 et:
