@@ -56,6 +56,15 @@ class P55Spec extends NNPSpec {
       val d = Node(x,leaf,rightleg)
       result should contain only (a,b,c,d)
     }
+    describe("when there is some larger odd number of nodes") {
+      val result = Tree.cbalanced(5,x);
+      val e = Node(x,leftLeg,leftLeg)
+      val f = Node(x,leftLeg,rightLeg)
+      val g = Node(x,rightLeg,leftLeg)
+      val h = Node(x,rightLeg,rightLeg)
+      result should contain only (e,f,g,h)
+    }
+
   }
 
 }
