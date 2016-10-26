@@ -72,14 +72,8 @@ object Tree {
     }
   } 
 
-  def fromList[T](ls: List[T])(implicit ev: T => Ordered[T]): Tree[T] = {
-    @tailrec
-    def myFromList(ls: List[T],acc: Tree[T]): Tree[T] = ls match {
-      case Nil => acc
-      case x :: xs => myFromList(xs,acc.addValue(x))
-    }
-    myFromList(ls,End)
-  }
+  def fromList[T](ls: List[T])(implicit ev: T => Ordered[T]): Tree[T] =
+    ls.foldLeft(End: Tree[T])((a,e) => a.addValue(e))
 
 }
 
