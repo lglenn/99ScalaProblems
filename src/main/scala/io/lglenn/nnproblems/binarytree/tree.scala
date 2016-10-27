@@ -75,6 +75,9 @@ object Tree {
   def fromList[T](ls: List[T])(implicit ev: T => Ordered[T]): Tree[T] =
     ls.foldLeft(End: Tree[T])((a,e) => a.addValue(e))
 
+  def symmetricBalancedTrees[T](nodes: Int, value: T): List[Tree[T]] = 
+    cbalanced(nodes,value) filter (_.isSymmetric)
+
 }
 
 // vim: set ts=2 sw=2 et:
