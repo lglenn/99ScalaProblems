@@ -78,6 +78,12 @@ object Tree {
   def symmetricBalancedTrees[T](nodes: Int, value: T): List[Tree[T]] = 
     cbalanced(nodes,value) filter (_.isSymmetric)
 
+  def minHbalNodes(h: Int): Int = h match {
+    case 1 => 1
+    case 2 => 2
+    case _ => minHbalNodes(h - 1) + minHbalNodes(h - 2) + 1
+  }
+
 }
 
 // vim: set ts=2 sw=2 et:
