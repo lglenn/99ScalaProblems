@@ -61,6 +61,14 @@ class P59Spec extends NNPSpec {
         assert(result.size == elements.size,s"Result contained unexpected trees: ${extraTrees(elements,result)}")
       }
 
+      it("works with height 2") {
+        Tree.hbalTrees(2,v) should contain only (leftLeaf,rightLeaf,both)
+      }
+
+      it("works with height 1") {
+        Tree.hbalTrees(1,v) should contain only (node)
+      }
+
     }
 
   }
