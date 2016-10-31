@@ -103,7 +103,11 @@ object Tree {
     case 2 => List(Node(value,End,Node(value)),Node(value,Node(value),End),Node(value,Node(value),Node(value)))
     case _ => {
       val subtrees = hbalTrees(h - 1, value);
-      for { a <- subtrees; b <- subtrees } yield Node(value,a,b)
+      val smaller = hbalTrees(h - 2,value)
+      val sameSize = for { a <- subtrees; b <- subtrees } yield Node(value,a,b)
+      val leftLarger = for { a <- subtrees; b <- smaller } yield Node(value,a,b)
+      val rightLarger = for { a <- smaller; b <- subtrees } yield Node(value,a,b)
+      sameSize ::: leftLarger ::: rightLarger
     }
   }
 
