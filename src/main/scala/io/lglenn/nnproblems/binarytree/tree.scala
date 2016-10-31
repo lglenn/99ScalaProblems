@@ -98,18 +98,20 @@ object Tree {
     case _ => minHbalNodes(h - 1) + minHbalNodes(h - 2) + 1
   }
 
-  def hbalTrees[T](h: Int, value: T): List[Tree[T]] = h match {
-    case 0 => List[Tree[T]]()
-    case 1 => List(Node(value))
-    case 2 => List(Node(value,End,Node(value)),Node(value,Node(value),End),Node(value,Node(value),Node(value)))
-    case _ => {
-      val subtrees = hbalTrees(h - 1, value);
-      val smaller = hbalTrees(h - 2,value)
-      val sameSize = for { a <- subtrees; b <- subtrees } yield Node(value,a,b)
-      val leftLarger = for { a <- subtrees; b <- smaller } yield Node(value,a,b)
-      val rightLarger = for { a <- smaller; b <- subtrees } yield Node(value,a,b)
-      sameSize ::: leftLarger ::: rightLarger
+  def hbalTrees[T](h: Int, value: T): List[Tree[T]] = { 
+
+    def permute(t: List[Tree[T]], u: List[Tree[T]]): List[Tree[T]] = for { a <- t; b <- u } yield Node(value,a,b)
+
+    h match {
+      case 0 => List(End)
+      case 1 => List(Node(value))
+      case _ => {
+        val subtrees = hbalTrees(h - 1, value);
+        val smaller = hbalTrees(h - 2,value);
+        permute(subtrees,subtrees) ::: permute(subtrees,smaller) ::: permute(smaller,subtrees)
+      }
     }
+
   }
 
 }
