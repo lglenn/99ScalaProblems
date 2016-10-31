@@ -6,9 +6,13 @@ sealed abstract class Tree[+T] {
   def isMirrorOf[A](other: Tree[A]): Boolean
   def isSymmetric: Boolean
   def addValue[U >: T](v: U)(implicit ev: U => Ordered[U]): Tree[U] 
+  def isHeightBalanced: Boolean
+  def height: Int
 }
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
+
+  import scala.math.{abs,max}
 
   override def toString = "T(" + value.toString + " " + left.toString + " " + right.toString + ")"
 
@@ -27,6 +31,11 @@ case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
     }
   }
 
+  def isHeightBalanced: Boolean =
+    left.isHeightBalanced && right.isHeightBalanced && abs(left.height - right.height) < 2
+
+  def height: Int = max(left.height,right.height) + 1
+
 }
 
 case object End extends Tree[Nothing] {
@@ -40,7 +49,12 @@ case object End extends Tree[Nothing] {
 
   def isSymmetric: Boolean = true
 
-  def addValue[U](v: U)(implicit ev: U => Ordered[U]): Tree[U] = Node(v)
+  def addValue[U](v: U)(implicit ev: U => Ordered[U]): Tree[U] = Node(v);
+
+  def isHeightBalanced = true
+
+  def height = 0
+
 }
 
 object Node {
