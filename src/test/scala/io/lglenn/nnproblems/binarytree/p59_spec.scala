@@ -31,30 +31,38 @@ class P59Spec extends NNPSpec {
       val leftLeaf = Node(v,Node(v),End);
       val rightLeaf = Node(v,End,Node(v));
       val both = Node(v,Node(v),Node(v));
+      val node = Node(v);
 
-      def threeTree(left: Tree[String], right: Tree[String]): Tree[String] = Node(v,left,right)
+      def threeTree(left: Tree[String], right: Tree[String]): Tree[String] = Node(v,left,right);
 
-      val a = threeTree(both,both);
-      val b = threeTree(both,leftLeaf);
-      val c = threeTree(both,rightLeaf);
-      val d = threeTree(leftLeaf,leftLeaf);
-      val e = threeTree(leftLeaf,rightLeaf);
-      val f = threeTree(rightLeaf,both);
-      val g = threeTree(rightLeaf,leftLeaf);
-      val h = threeTree(rightLeaf,rightLeaf);
-      val i = threeTree(both,End);
-      val j = threeTree(leftLeaf,End);
-      val k = threeTree(rightLeaf,End);
-      val l = threeTree(End,both);
-      val m = threeTree(End,leftLeaf);
-      val n = threeTree(End,rightLeaf);
+      def extraTrees[T](expected: List[Tree[T]],result: List[Tree[T]]): List[Tree[T]] = 
+        result filter { e => !expected.contains(e) }
+
+      val elements = List(
+        threeTree(both,both),
+        threeTree(both,leftLeaf),
+        threeTree(both,rightLeaf),
+        threeTree(leftLeaf,both),
+        threeTree(leftLeaf,leftLeaf),
+        threeTree(leftLeaf,rightLeaf),
+        threeTree(rightLeaf,both),
+        threeTree(rightLeaf,leftLeaf),
+        threeTree(rightLeaf,rightLeaf),
+        threeTree(both,node),
+        threeTree(leftLeaf,node),
+        threeTree(rightLeaf,node),
+        threeTree(node,both),
+        threeTree(node,leftLeaf),
+        threeTree(node,rightLeaf));
 
       it("contains every height-balanced binary tree for a given depth") {
-        Tree.hbalTrees(3,v) should contain only (a,b,c,d,e,f,g,h,i,j,k,l,m,n)
+        val result = Tree.hbalTrees(3,v);
+        elements foreach { elem => result should contain (elem) }
+        assert(result.size == elements.size,s"Result contained unexpected trees: ${extraTrees(elements,result)}")
       }
 
-  }
+    }
 
-}
+  }
 
   // vim: set ts=2 sw=2 et:
