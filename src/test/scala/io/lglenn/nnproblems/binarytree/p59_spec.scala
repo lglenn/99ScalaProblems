@@ -69,6 +69,10 @@ class P59Spec extends NNPSpec {
         Tree.hbalTrees(1,v) should contain only (node)
       }
 
+      it("works with height 0") {
+        Tree.hbalTrees(0,v) should be (empty)
+      }
+
     }
 
   }

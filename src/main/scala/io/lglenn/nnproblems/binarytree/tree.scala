@@ -99,6 +99,7 @@ object Tree {
   }
 
   def hbalTrees[T](h: Int, value: T): List[Tree[T]] = h match {
+    case 0 => List[Tree[T]]()
     case 1 => List(Node(value))
     case 2 => List(Node(value,End,Node(value)),Node(value,Node(value),End),Node(value,Node(value),Node(value)))
     case _ => {
