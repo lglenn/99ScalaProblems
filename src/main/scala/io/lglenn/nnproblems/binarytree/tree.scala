@@ -98,6 +98,15 @@ object Tree {
     case _ => minHbalNodes(h - 1) + minHbalNodes(h - 2) + 1
   }
 
+  def hbalTrees[T](h: Int, value: T): List[Tree[T]] = h match {
+    case 1 => List(Node(value))
+    case 2 => List(Node(value,End,Node(value)),Node(value,Node(value),End),Node(value,Node(value),Node(value)))
+    case _ => {
+      val subtrees = hbalTrees(h - 1, value);
+      for { a <- subtrees; b <- subtrees } yield Node(value,a,b)
+    }
+  }
+
 }
 
 // vim: set ts=2 sw=2 et:
