@@ -58,6 +58,24 @@ class P60Spec extends NNPSpec {
       }
     }
 
+    describe("Tree.hbalTreesWithNodes") {
+      it("builds the right number of height-balanced binary trees with 1 node") {
+        Tree.hbalTreesWithNodes(1,"x") should have size(1)
+      }
+      it("builds the right number of height-balanced binary trees with 2 nodes") {
+        Tree.hbalTreesWithNodes(2,"x") should have size(2)
+      }
+      it("builds the right number of height-balanced binary trees with 3 nodes") {
+        Tree.hbalTreesWithNodes(3,"x") should have size(1)
+      }
+      it("builds the right number of height-balanced binary trees with 4 nodes") {
+        Tree.hbalTreesWithNodes(4,"x") should have size(4)
+      }
+      it("builds the right number of height-balanced binary trees with 15 nodes") {
+        Tree.hbalTreesWithNodes(15,"x") should have size(1553)
+      }
+    }
+
   }
 
   // vim: set ts=2 sw=2 et:

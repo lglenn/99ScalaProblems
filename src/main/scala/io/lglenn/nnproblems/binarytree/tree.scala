@@ -8,6 +8,7 @@ sealed abstract class Tree[+T] {
   def addValue[U >: T](v: U)(implicit ev: U => Ordered[U]): Tree[U] 
   def isHeightBalanced: Boolean
   def height: Int
+  def size: Int
 }
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
@@ -36,6 +37,8 @@ case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
 
   def height: Int = max(left.height,right.height) + 1
 
+  def size: Int = left.size + right.size + 1
+
 }
 
 case object End extends Tree[Nothing] {
@@ -54,6 +57,8 @@ case object End extends Tree[Nothing] {
   def isHeightBalanced = true
 
   def height = 0
+  
+  def size = 0
 
 }
 
@@ -98,9 +103,17 @@ object Tree {
     case _ => minHbalNodes(h - 1) + minHbalNodes(h - 2) + 1
   }
 
+  def minHbalHeight(nodes: Int): Int = ((scala.math.log(nodes) / scala.math.log(2) + 1)).toInt;
+
   def maxHbalHeight(nodes: Int): Int = {
     def f(h: Int): Int = if (minHbalNodes(h + 1) > nodes) h else f(h + 1)
     f(1)
+  }
+
+  def hbalTreesWithNodes[T](nodes: Int, value: T): List[Tree[T]] = {
+    val height = maxHbalHeight(nodes);
+    val trees = (minHbalHeight(nodes) to maxHbalHeight(nodes)) flatMap (hbalTrees(_,value) filter (_.size == nodes))
+    trees.toList
   }
 
   def hbalTrees[T](h: Int, value: T): List[Tree[T]] = { 
