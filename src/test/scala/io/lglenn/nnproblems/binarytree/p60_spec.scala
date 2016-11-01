@@ -46,6 +46,18 @@ class P60Spec extends NNPSpec {
       }
     }
 
+    describe("Tree.maxHbalHeight") {
+      it("finds the maximum height for a height-balanced tree with 1 node") {
+        Tree.maxHbalHeight(1) should be(1)
+      }
+      it("finds the maximum height for a height-balanced tree with 2 nodes") {
+        Tree.maxHbalHeight(2) should be(2)
+      }
+      it("finds the maximum height for a height-balanced tree with n nodes") {
+        Tree.maxHbalHeight(4) should be(3)
+      }
+    }
+
   }
 
   // vim: set ts=2 sw=2 et:

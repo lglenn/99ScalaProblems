@@ -98,6 +98,11 @@ object Tree {
     case _ => minHbalNodes(h - 1) + minHbalNodes(h - 2) + 1
   }
 
+  def maxHbalHeight(nodes: Int): Int = {
+    def f(h: Int): Int = if (minHbalNodes(h + 1) > nodes) h else f(h + 1)
+    f(1)
+  }
+
   def hbalTrees[T](h: Int, value: T): List[Tree[T]] = { 
 
     def permute(t: List[Tree[T]], u: List[Tree[T]]): List[Tree[T]] = for { a <- t; b <- u } yield Node(value,a,b)
