@@ -9,6 +9,7 @@ sealed abstract class Tree[+T] {
   def isHeightBalanced: Boolean
   def height: Int
   def size: Int
+  def leafCount: Int
 }
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
@@ -39,6 +40,11 @@ case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
 
   def size: Int = left.size + right.size + 1
 
+  def leafCount: Int = (left,right) match {
+    case(End,End) => 1
+    case _ => left.leafCount + right.leafCount
+  }
+
 }
 
 case object End extends Tree[Nothing] {
@@ -60,6 +66,7 @@ case object End extends Tree[Nothing] {
   
   def size = 0
 
+  def leafCount = 0
 }
 
 object Node {
